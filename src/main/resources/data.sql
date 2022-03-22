@@ -7,7 +7,7 @@ INSERT INTO authorities (name, authority)
 values ('user', 'ROLE_USER');
 
 insert into polls (name, start, end, description)
-values ('BFF Poll', CURDATE(), '2022-04-21', 'This poll help to understand what winx witch are you');
+values ('BFF Poll', '2022-03-21', '2022-04-21', 'This poll help to understand who is your really best friend');
 
 insert into polls (name, start, end, description)
 values ('Ended poll', '2022-03-20', '2022-03-21', 'This poll has been ended');

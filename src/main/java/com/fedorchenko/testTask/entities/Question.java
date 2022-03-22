@@ -1,9 +1,6 @@
 package com.fedorchenko.testTask.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import com.fedorchenko.testTask.enums.PollType;
 
 import javax.persistence.*;
@@ -29,7 +26,7 @@ public class Question {
     @JoinColumn(name = "poll_id")
     private Poll poll;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private List<Option> options = new ArrayList<>();
 
     @JsonManagedReference

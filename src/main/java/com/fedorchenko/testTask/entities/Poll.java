@@ -20,7 +20,7 @@ public class Poll {
     @Column(name = "name", unique = true, length = 45)
     private String name;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "start")
     private Date start;
 
@@ -30,7 +30,7 @@ public class Poll {
     @Column(name = "description", length = 4000)
     private String description;
 
-    @OneToMany(mappedBy = "poll", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "poll", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions = new ArrayList<>();
 
     @JsonManagedReference
