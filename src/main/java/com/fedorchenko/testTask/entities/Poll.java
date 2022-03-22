@@ -1,5 +1,9 @@
 package com.fedorchenko.testTask.entities;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,6 +33,7 @@ public class Poll {
     @OneToMany(mappedBy = "poll", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Question> questions = new ArrayList<>();
 
+    @JsonManagedReference
     public List<Question> getQuestions() {
         return questions;
     }

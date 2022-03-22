@@ -8,45 +8,49 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import javax.sql.DataSource;
 
 @Configuration
-public class SecurityConfig  extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth)
+
+
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable();
+
+        http.authorizeRequests()
+                .antMatchers("/h2-console/**")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and().httpBasic()
+                .and().sessionManagement().disable();;
+
+        http.headers()
+                .frameOptions()
+                .sameOrigin();
+    }
+
+    @Override
+    public void configure(AuthenticationManagerBuilder builder)
             throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource).passwordEncoder(new BCryptPasswordEncoder())
+        builder.jdbcAuthentication()
+                .dataSource(dataSource)
+                .passwordEncoder(new BCryptPasswordEncoder())
                 .usersByUsernameQuery("select name,password,enabled "
                         + "from users "
                         + "where name = ?")
                 .authoritiesByUsernameQuery("select name,authority "
                         + "from authorities "
                         + "where name = ?");
-    }
-
-
-    @Override
-    protected void configure(HttpSecurity httpSecurity)
-            throws Exception {
-        httpSecurity.authorizeRequests()
-                .antMatchers("/h2-console/**")
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .formLogin();
-
-        httpSecurity.csrf()
-                .ignoringAntMatchers("/h2-console/**");
-        httpSecurity.headers()
-                .frameOptions()
-                .sameOrigin();
     }
 
 }

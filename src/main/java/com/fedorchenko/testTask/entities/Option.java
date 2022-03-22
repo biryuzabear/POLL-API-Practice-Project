@@ -1,5 +1,9 @@
 package com.fedorchenko.testTask.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 
 @Entity
@@ -14,6 +18,7 @@ public class Option {
     @JoinColumn(name = "question_id")
     private Question question;
 
+    @JsonBackReference
     public Question getQuestion() {
         return question;
     }
