@@ -1,4 +1,4 @@
-package com.fedorchenko.testTask.dao;
+package com.fedorchenko.testTask.entities;
 
 import javax.persistence.*;
 
