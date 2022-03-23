@@ -1,5 +1,9 @@
 package com.fedorchenko.testTask.entities;
 
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import net.minidev.json.annotate.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
