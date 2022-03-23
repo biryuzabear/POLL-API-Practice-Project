@@ -29,6 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/h2-console/**")
                 .permitAll()
+                .antMatchers("/user_api/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
+                .antMatchers("/admin_api/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and().httpBasic()

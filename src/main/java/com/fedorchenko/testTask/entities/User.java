@@ -1,13 +1,11 @@
 package com.fedorchenko.testTask.entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -16,7 +14,7 @@ public class User {
     @Column(name = "name", unique = true)
     String name;
 
-    @Column(name = "password")
+    @Column(name = "password", length = 60)
     String password;
 
     @Column(name = "enabled", columnDefinition = "TINYINT")

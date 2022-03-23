@@ -1,10 +1,10 @@
 INSERT INTO users (name, password, enabled)
-values ('user',
-        '$2a$10$8.UnVuG9HHgffUDAlk8qfOuVGkqRzgVymGe07xd00DMxs.AQubh4a',
+values ('admin',
+        '$2a$10$ycchOA5goOMKPDi4DtX27uXZifL2HuYP7BM3mUr5TSMqkQ9nNZ2.C',
         1);
 
 INSERT INTO authorities (name, authority)
-values ('user', 'ROLE_USER');
+values ('admin', 'ROLE_ADMIN');
 
 insert into polls (name, start, end, description)
 values ('BFF Poll', '2022-03-21', '2022-04-21', 'This poll help to understand who is your really best friend');
