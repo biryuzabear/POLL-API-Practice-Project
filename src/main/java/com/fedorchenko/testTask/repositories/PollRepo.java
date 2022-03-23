@@ -16,7 +16,8 @@ public interface PollRepo extends JpaRepository<Poll, Long> {
             "INNER JOIN questions ON questions.ID = answers.question_id) " +
             "INNER JOIN polls ON polls.id = questions.poll_id " +
             "WHERE users.id = ?1", nativeQuery = true)
-    List<Poll> findPollByUserId(Long id);
+    List<Poll> findAnsweredPollsByUserId(Long id);
+
 
     List<Poll> findPollsByStartBeforeAndEndAfter(Date start, Date end);
 

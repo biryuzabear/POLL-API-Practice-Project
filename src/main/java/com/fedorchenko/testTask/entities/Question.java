@@ -1,7 +1,7 @@
 package com.fedorchenko.testTask.entities;
 
 import com.fasterxml.jackson.annotation.*;
-import com.fedorchenko.testTask.enums.PollType;
+import com.fedorchenko.testTask.enums.QuestionType;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ public class Question {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
-    private PollType type;
+    private QuestionType type;
 
     @ManyToOne
     @JoinColumn(name = "poll_id")
@@ -47,12 +47,12 @@ public class Question {
         this.poll = poll;
     }
 
-    public PollType getPollTypes() {
+    public QuestionType getPollTypes() {
         return type;
     }
 
-    public void setPollTypes(PollType pollType) {
-        this.type = pollType;
+    public void setPollTypes(QuestionType questionType) {
+        this.type = questionType;
     }
 
     public String getText() {
