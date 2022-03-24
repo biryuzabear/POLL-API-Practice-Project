@@ -14,7 +14,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.info.Contact;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,14 +24,10 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
-@OpenAPIDefinition(info = @Info(description = "test",
-        contact = @Contact(name = "BOBA"),
-        title = "tesy",
-        version = "2.0.0"))
 @RestController
 @RequestMapping("/user_api/")
-@Tag(description = "desc",
-        name = "name")
+@Tag(description = "description",
+        name = "User API")
 public class UserApiController {
 
     @Autowired
@@ -42,7 +37,7 @@ public class UserApiController {
             description = "Позволяет зарегистрировать пользователя"
     )
     @ApiResponse(content = @Content(mediaType = "json",schema = @Schema(implementation = PollWithQuestionsDTO.class)))
-    @GetMapping("/poll/{id}")
+    @GetMapping("/polls/{id}")
     public PollWithQuestionsDTO sendActualPollById(@PathVariable @Parameter(description = "Номер запроса") Long id) {
         return new PollWithQuestionsDTO(userApiService.getPollById(id));
     }
@@ -80,7 +75,7 @@ public class UserApiController {
         return new PollWithQuestionsDTO(poll, questionDtos);
     }
 
-    @GetMapping("/poll/{id}/questions")
+    @GetMapping("/polls/{id}/questions")
     public List<PollWithQuestionsDTO.QuestionDto> getQuestionsByPoll(@PathVariable Long id) {
         Poll poll = userApiService.getPollById(id);
         List<PollWithQuestionsDTO.QuestionDto> questionDtos = new ArrayList<>();
@@ -90,12 +85,12 @@ public class UserApiController {
         return questionDtos;
     }
 
-    @GetMapping("/question/{id}")
+    @GetMapping("/questions/{id}")
     public PollWithQuestionsDTO.QuestionDto getQuestionById(@PathVariable Long id) {
         return new PollWithQuestionsDTO.QuestionDto(userApiService.getQuestionById(id));
     }
 
-    @PostMapping("question/{id}/answer")
+    @PostMapping("questions/{id}/answer")
     public PollWithQuestionsDTO.QuestionDto answerQuestion(@PathVariable Long id, @RequestBody AnswerDto answerDto, Principal principal) {
         Answer answer = new Answer();
         answer.setUser(userApiService.getUser(principal.getName()));
@@ -104,7 +99,7 @@ public class UserApiController {
         return new PollWithQuestionsDTO.QuestionDto(answer.getQuestion(), userApiService.saveAnswer(answer));
     }
 
-    @PostMapping("poll/{id}/answer")
+    @PostMapping("polls/{id}/answer")
     public PollWithQuestionsDTO answerPoll(@PathVariable Long id, @RequestBody List<AnswerDto> answerDtos, Principal principal) {
         List<PollWithQuestionsDTO.QuestionDto> questionDtos = new ArrayList<>();
         Poll poll = userApiService.getPollById(id);

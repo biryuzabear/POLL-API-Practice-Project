@@ -15,7 +15,7 @@ public class PollDescriptionDto implements Serializable {
         if (isAnswered)
             url = "/api/user_api/answered/" + poll.getId();
         else
-            url = "/api/user_api/poll/" + poll.getId();
+            url = "/api/user_api/polls/" + poll.getId();
     }
 
 

@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.nio.file.LinkOption;
 
-public interface OptionsRepo extends JpaRepository<Option, Long> {
+public interface OptionRepo extends JpaRepository<Option, Long> {
 }

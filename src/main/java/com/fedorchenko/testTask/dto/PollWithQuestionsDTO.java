@@ -5,14 +5,11 @@ import com.fedorchenko.testTask.entities.Option;
 import com.fedorchenko.testTask.entities.Poll;
 import com.fedorchenko.testTask.entities.Question;
 import com.fedorchenko.testTask.enums.PollType;
-import com.fedorchenko.testTask.enums.QuestionType;
-import org.springframework.security.core.parameters.P;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 public class PollWithQuestionsDTO implements Serializable {
     private final String name;
@@ -23,11 +20,11 @@ public class PollWithQuestionsDTO implements Serializable {
     public PollWithQuestionsDTO(Poll poll) {
         this.name = poll.getName();
         this.description = poll.getDescription();
-        List<QuestionDto> questionDtos = new ArrayList<>();
+        List<QuestionDto> questionDTOs = new ArrayList<>();
         for (Question question : poll.getQuestions()) {
-            questionDtos.add(new QuestionDto(question));
+            questionDTOs.add(new QuestionDto(question));
         }
-        this.questions = questionDtos;
+        this.questions = questionDTOs;
         Date now = new Date();
         if (poll.getStart().after(now))
             this.pollType = PollType.NOT_STARTED;
@@ -79,7 +76,7 @@ public class PollWithQuestionsDTO implements Serializable {
                 optionsTexts.add(option.getText());
             }
             this.optionTexts = optionsTexts;
-            url = "/api/user_api/question/" + question.getId();
+            url = "/api/user_api/questions/" + question.getId();
         }
 
 
