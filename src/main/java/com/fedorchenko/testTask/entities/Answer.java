@@ -8,6 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "answers")
+@Schema(description = "Схема для изменения сущности Answer")
 public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
