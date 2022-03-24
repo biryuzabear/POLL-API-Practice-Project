@@ -4,8 +4,6 @@ import com.fedorchenko.testTask.entities.Answer;
 import com.fedorchenko.testTask.enums.EntityList;
 import com.fedorchenko.testTask.exceptions.EntityNotFoundException;
 import com.fedorchenko.testTask.repositories.AnswerRepo;
-import com.fedorchenko.testTask.repositories.AnswerRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +11,12 @@ import java.util.List;
 @Service
 public class AnswerService {
 
-    @Autowired
+    final
     AnswerRepo answerRepo;
+
+    public AnswerService(AnswerRepo answerRepo) {
+        this.answerRepo = answerRepo;
+    }
 
     public List<Answer> getAnswers() {
         return answerRepo.findAll();

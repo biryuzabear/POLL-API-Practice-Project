@@ -4,7 +4,6 @@ import com.fedorchenko.testTask.entities.User;
 import com.fedorchenko.testTask.enums.EntityList;
 import com.fedorchenko.testTask.exceptions.EntityNotFoundException;
 import com.fedorchenko.testTask.repositories.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +11,12 @@ import java.util.List;
 @Service
 public class UserService {
 
-    @Autowired
+    final
     UserRepo userRepo;
+
+    public UserService(UserRepo userRepo) {
+        this.userRepo = userRepo;
+    }
 
     public List<User> getUsers() {
         return userRepo.findAll();

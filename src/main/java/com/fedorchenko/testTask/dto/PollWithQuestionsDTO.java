@@ -40,10 +40,10 @@ public class PollWithQuestionsDTO implements Serializable {
     }
 
 
-    public PollWithQuestionsDTO(Poll poll, List<QuestionDto> questionDtos) {
+    public PollWithQuestionsDTO(Poll poll, List<QuestionDto> questionDTOs) {
         this.name = poll.getName();
         this.description = poll.getDescription();
-        this.questions = questionDtos;
+        this.questions = questionDTOs;
         pollType = PollType.ANSWERED;
     }
 
