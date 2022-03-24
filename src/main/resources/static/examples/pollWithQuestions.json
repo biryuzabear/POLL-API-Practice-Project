@@ -1,0 +1,14 @@
+{
+  "name": "herer",
+  "description": "is",
+  "questions": [
+    {
+      "text": "another",
+      "optionTexts": [
+        "test"
+      ],
+      "url": "d"
+    }
+  ],
+  "pollType": "ENDED"
+}

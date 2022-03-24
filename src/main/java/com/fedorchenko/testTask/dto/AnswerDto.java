@@ -2,11 +2,15 @@ package com.fedorchenko.testTask.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fedorchenko.testTask.entities.Answer;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 
 import java.io.Serializable;
 import java.util.Objects;
 
+@Schema(description = "DTO для ответа")
 public class AnswerDto implements Serializable {
+    @Schema(description = "Текстовый ответ на вопрос")
     private final String text;
 
     @JsonCreator
