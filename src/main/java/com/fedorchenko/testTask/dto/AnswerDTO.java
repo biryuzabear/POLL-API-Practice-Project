@@ -8,17 +8,17 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Schema(description = "DTO для ответа")
-public class AnswerDto implements Serializable {
+@Schema(description = "Схема для передачи данных об ответе.")
+public class AnswerDTO implements Serializable {
     @Schema(description = "Текстовый ответ на вопрос")
     private final String text;
 
     @JsonCreator
-    public AnswerDto(String text) {
+    public AnswerDTO(String text) {
         this.text = text;
     }
 
-    public AnswerDto(Answer answer){
+    public AnswerDTO(Answer answer){
         text = answer.getText();
     }
 
@@ -30,7 +30,7 @@ public class AnswerDto implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AnswerDto entity = (AnswerDto) o;
+        AnswerDTO entity = (AnswerDTO) o;
         return Objects.equals(this.text, entity.text);
     }
 

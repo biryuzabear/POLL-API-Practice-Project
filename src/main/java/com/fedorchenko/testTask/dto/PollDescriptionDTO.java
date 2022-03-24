@@ -1,15 +1,21 @@
 package com.fedorchenko.testTask.dto;
 
 import com.fedorchenko.testTask.entities.Poll;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 
-public class PollDescriptionDto implements Serializable {
+@Schema(description = "Схема для представления основных данных об опросе с ссылками на конкретный опрос.")
+public class PollDescriptionDTO implements Serializable {
+
+    @Schema(description = "Имя опроса")
     private final String name;
+    @Schema(description = "Описание опроса")
     private final String description;
+    @Schema(description = "Генерируемая ссылка на сам опрос с вопросами и ответами")
     private final String url;
 
-    public PollDescriptionDto(Poll poll, boolean isAnswered) {
+    public PollDescriptionDTO(Poll poll, boolean isAnswered) {
         name = poll.getName();
         description = poll.getDescription();
         if (isAnswered)

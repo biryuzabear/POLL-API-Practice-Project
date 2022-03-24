@@ -5,16 +5,22 @@ import com.fedorchenko.testTask.entities.Option;
 import com.fedorchenko.testTask.entities.Poll;
 import com.fedorchenko.testTask.entities.Question;
 import com.fedorchenko.testTask.enums.PollType;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+@Schema(description = "Схема для представления и передачи данных об опросе вместе с вопросами, вариантами ответов и самими ответами.")
 public class PollWithQuestionsDTO implements Serializable {
+    @Schema(description = "Имя опроса")
     private final String name;
+    @Schema(description = "Описание опроса")
     private final String description;
+    @Schema(description = "Список вопросов опроса")
     private final List<QuestionDto> questions;
+    @Schema(description = "Тип опроса: актуальный, закончившийся, не начавшийся. В случае, когда форма" +
+            "предоставляет информацию о пройденном опросе, информация об этом также передается в этом поле")
     private final PollType pollType;
 
     public PollWithQuestionsDTO(Poll poll) {
@@ -58,10 +64,13 @@ public class PollWithQuestionsDTO implements Serializable {
         return questions;
     }
 
-
+    @Schema(description = "Схема для представления и передачи данных о вопрос вместе с вариантами ответов и выбранным ответом.")
     public static class QuestionDto implements Serializable {
+        @Schema(description = "Текст вопроса")
         private final String text;
+        @Schema(description = "Варианты ответов, если они есть")
         private final List<String> optionTexts;
+        @Schema(description = "Генерируемая ссылка на сам вопрос с ответом")
         private final String url;
 
         public QuestionDto(Question question, Answer answer){
