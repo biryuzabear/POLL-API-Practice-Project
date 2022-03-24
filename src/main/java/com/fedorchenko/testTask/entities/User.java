@@ -1,22 +1,24 @@
 package com.fedorchenko.testTask.entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "users")
+@Schema(description = "Схема для изменения сущности User")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
 
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     @Column(name = "name", unique = true)
     String name;
 
-    @Column(name = "password")
+    @Column(name = "password", length = 60)
     String password;
 
     @Column(name = "enabled", columnDefinition = "TINYINT")

@@ -1,48 +1,75 @@
 package com.fedorchenko.testTask.controllers;
 
 import com.fedorchenko.testTask.entities.Poll;
-import com.fedorchenko.testTask.repositories.PollRepo;
-import com.fedorchenko.testTask.repositories.UserRepo;
+import com.fedorchenko.testTask.services.PollService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-import java.util.Date;
 import java.util.List;
 
 @RestController
 @RequestMapping("/polls")
+@Tag(description = "Контроллер для работы с сущностью Poll, доступен только администратору",
+        name = "API для сущности Poll")
 public class PollController {
 
     @Autowired
-    PollRepo pollRepo;
-    @Autowired
-    UserRepo userRepo;
+    PollService pollService;
 
+    @Operation(
+            summary = "Получение всех записей Poll из БД"
+    )
+    @ApiResponse(content = @Content(mediaType = "json", array = @ArraySchema(schema = @Schema(implementation = Poll.class))))
     @GetMapping
-    public List<Poll> getPolls() {
-        return pollRepo.findAll();
+    List<Poll> getPolls() {
+        return pollService.getPolls();
     }
 
-
-    @GetMapping("/byUserId/{id}")
-    public List<Poll> getPollsByUserId(@PathVariable Long id) {
-        return pollRepo.findPollByUserId(id);
+    @Operation(
+            summary = "Добавление новой записи Poll в БД"
+    )
+    @ApiResponse(content = @Content(mediaType = "json", schema = @Schema(implementation = Poll.class)))
+    @PostMapping()
+    Poll newPoll(@RequestBody Poll newPoll) {
+        return pollService.savePoll(newPoll);
     }
 
-    @GetMapping("/thisUser")
-    public List<Poll> getPollsByUserId(Principal principal) {
-        return pollRepo.findPollByUserId(userRepo.findByName(principal.getName()).getId());
+    @Operation(
+            summary = "Получение записи Poll из БД по ее номеру(id)"
+    )
+    @ApiResponse(content = @Content(mediaType = "json", schema = @Schema(implementation = Poll.class)))
+    @GetMapping("/{id}")
+    Poll getPoll(@PathVariable Long id) {
+        return pollService.findPollById(id);
     }
 
-    @GetMapping("/actual")
-    public List<Poll> getActual() {
-        Date date = new Date();
-        List<Poll> list = pollRepo.findPollsByStartBeforeAndEndAfter(date, date);
-        return list;
+    // в данном случае и имя и айди являются неизменяемыми параметрами. добавить в документацию
+    @PutMapping("/{id}")
+    @Operation(
+            summary = "Изменение записи Poll в БД по ее номеру(id)"
+    )
+    @ApiResponse(content = @Content(mediaType = "json", schema = @Schema(implementation = Poll.class)))
+    Poll editPoll(@RequestBody Poll newPoll, @PathVariable Long id) {
+        Poll poll = pollService.findPollById(id);
+        poll.setDescription(newPoll.getDescription());
+        poll.setEnd(newPoll.getEnd());
+        poll.setName(newPoll.getName());
+        poll.setQuestions(newPoll.getQuestions());
+        return pollService.savePoll(poll);
     }
 
+    @Operation(
+            summary = "Удаление записи Poll из БД по ее номеру(id)"
+    )
+    @DeleteMapping("/id}")
+    void deletePoll(@PathVariable Long id) {
+        pollService.deletePollById(id);
+    }
 }
+

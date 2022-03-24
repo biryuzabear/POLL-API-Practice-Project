@@ -1,13 +1,19 @@
 package com.fedorchenko.testTask.entities;
 
+
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "answers")
+@Schema(description = "Схема для изменения сущности Answer")
 public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
 
     @ManyToOne

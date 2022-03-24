@@ -1,7 +1,8 @@
 package com.fedorchenko.testTask.entities;
 
 import com.fasterxml.jackson.annotation.*;
-import com.fedorchenko.testTask.enums.PollType;
+import com.fedorchenko.testTask.enums.QuestionType;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -9,10 +10,12 @@ import java.util.List;
 
 @Entity
 @Table(name = "questions")
+@Schema(description = "Схема для изменения сущности Question")
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Long id;
 
     @Column(name = "text", length = 280)
@@ -20,7 +23,7 @@ public class Question {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
-    private PollType type;
+    private QuestionType type;
 
     @ManyToOne
     @JoinColumn(name = "poll_id")
@@ -47,12 +50,12 @@ public class Question {
         this.poll = poll;
     }
 
-    public PollType getPollTypes() {
+    public QuestionType getQuestionType() {
         return type;
     }
 
-    public void setPollTypes(PollType pollType) {
-        this.type = pollType;
+    public void setQuestionType(QuestionType questionType) {
+        this.type = questionType;
     }
 
     public String getText() {

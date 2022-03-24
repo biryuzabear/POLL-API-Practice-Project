@@ -18,9 +18,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -29,6 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/h2-console/**")
                 .permitAll()
+                .antMatchers("/user_api/**").hasAnyAuthority("ROLE_USER","ROLE_ADMIN")
+                .antMatchers("/**").hasAuthority("ROLE_ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and().httpBasic()
