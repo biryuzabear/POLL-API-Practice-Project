@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +18,12 @@ import java.util.List;
         name = "API для сущности User")
 public class UserController {
 
-    @Autowired
+    final
     UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @Operation(
             summary = "Получение всех записей User из БД"
@@ -49,7 +52,6 @@ public class UserController {
         return userService.findUserById(id);
     }
 
-    // в данном случае и имя и айди являются неизменяемыми параметрами. добавить в документацию
     @PutMapping("/{id}")
     @Operation(
             summary = "Изменение записи User в БД по ее номеру(id)"

@@ -27,8 +27,12 @@ import java.util.List;
         name = "API для пользователя")
 public class UserApiController {
 
-    @Autowired
+    final
     UserApiService userApiService;
+
+    public UserApiController(UserApiService userApiService) {
+        this.userApiService = userApiService;
+    }
 
     @Operation(
             summary = "Получение опроса по его номеру в базе данных"
@@ -83,7 +87,7 @@ public class UserApiController {
     }
 
     @Operation(
-            summary = "Получение пользователя"
+            summary = "Получение списка вопросов из опроса, полученного по номеру"
     )
     @ApiResponse(content = @Content(mediaType = "json", array = @ArraySchema(schema = @Schema(implementation = PollWithQuestionsDTO.class))))
     @GetMapping("/polls/{id}/questions")
@@ -126,7 +130,7 @@ public class UserApiController {
     public PollWithQuestionsDTO answerPoll(@PathVariable Long id, @RequestBody List<AnswerDTO> answerDTOs, Principal principal) {
         List<PollWithQuestionsDTO.QuestionDto> questionDTOs = new ArrayList<>();
         Poll poll = userApiService.getPollById(id);
-        User user = userApiService.getUser(poll.getName());
+        User user = userApiService.getUser(principal.getName());
         for (int i = 0; i < answerDTOs.size(); i++) {
             Answer answer = new Answer();
             answer.setUser(user);

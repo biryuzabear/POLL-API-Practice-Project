@@ -8,7 +8,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +18,12 @@ import java.util.List;
         name = "API для сущности Poll")
 public class PollController {
 
-    @Autowired
+    final
     PollService pollService;
+
+    public PollController(PollService pollService) {
+        this.pollService = pollService;
+    }
 
     @Operation(
             summary = "Получение всех записей Poll из БД"
@@ -49,7 +52,6 @@ public class PollController {
         return pollService.findPollById(id);
     }
 
-    // в данном случае и имя и айди являются неизменяемыми параметрами. добавить в документацию
     @PutMapping("/{id}")
     @Operation(
             summary = "Изменение записи Poll в БД по ее номеру(id)"
@@ -67,7 +69,7 @@ public class PollController {
     @Operation(
             summary = "Удаление записи Poll из БД по ее номеру(id)"
     )
-    @DeleteMapping("/id}")
+    @DeleteMapping("/{id}")
     void deletePoll(@PathVariable Long id) {
         pollService.deletePollById(id);
     }

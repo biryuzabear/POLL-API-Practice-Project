@@ -8,7 +8,6 @@ import com.fedorchenko.testTask.repositories.AnswerRepo;
 import com.fedorchenko.testTask.repositories.PollRepo;
 import com.fedorchenko.testTask.repositories.QuestionRepo;
 import com.fedorchenko.testTask.repositories.UserRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,16 +17,21 @@ import java.util.List;
 @Service
 public class UserApiService {
 
-
-
-    @Autowired
+    final
     PollRepo pollRepo;
-    @Autowired
+    final
     UserRepo userRepo;
-    @Autowired
+    final
     AnswerRepo answerRepo;
-    @Autowired
+    final
     QuestionRepo questionRepo;
+
+    public UserApiService(PollRepo pollRepo, UserRepo userRepo, AnswerRepo answerRepo, QuestionRepo questionRepo) {
+        this.pollRepo = pollRepo;
+        this.userRepo = userRepo;
+        this.answerRepo = answerRepo;
+        this.questionRepo = questionRepo;
+    }
 
     public User getUser(String name){
         return userRepo.findByName(name);

@@ -4,7 +4,6 @@ import com.fedorchenko.testTask.entities.Question;
 import com.fedorchenko.testTask.enums.EntityList;
 import com.fedorchenko.testTask.exceptions.EntityNotFoundException;
 import com.fedorchenko.testTask.repositories.QuestionRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +11,12 @@ import java.util.List;
 @Service
 public class QuestionService {
 
-    @Autowired
+    final
     QuestionRepo questionRepo;
+
+    public QuestionService(QuestionRepo questionRepo) {
+        this.questionRepo = questionRepo;
+    }
 
     public List<Question> getQuestions() {
         return questionRepo.findAll();

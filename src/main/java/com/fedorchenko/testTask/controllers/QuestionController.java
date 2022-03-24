@@ -19,8 +19,12 @@ import java.util.List;
         name = "API для сущности Question")
 public class QuestionController {
 
-    @Autowired
+    final
     QuestionService questionService;
+
+    public QuestionController(QuestionService questionService) {
+        this.questionService = questionService;
+    }
 
     @Operation(
             summary = "Получение всех записей Question из БД"
@@ -49,7 +53,6 @@ public class QuestionController {
         return questionService.findQuestionById(id);
     }
 
-    // в данном случае и имя и айди являются неизменяемыми параметрами. добавить в документацию
     @PutMapping("/{id}")
     @Operation(
             summary = "Изменение записи Question в БД по ее номеру(id)"

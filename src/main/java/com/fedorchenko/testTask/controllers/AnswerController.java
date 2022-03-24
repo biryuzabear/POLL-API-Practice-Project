@@ -19,8 +19,12 @@ import java.util.List;
         name = "API для сущности Answer")
 public class AnswerController {
 
-    @Autowired
+    final
     AnswerService answerService;
+
+    public AnswerController(AnswerService answerService) {
+        this.answerService = answerService;
+    }
 
     @Operation(
             summary = "Получение всех записей Answer из БД"
@@ -49,7 +53,6 @@ public class AnswerController {
         return answerService.findAnswerById(id);
     }
 
-    // в данном случае и имя и айди являются неизменяемыми параметрами. добавить в документацию
     @PutMapping("/{id}")
     @Operation(
             summary = "Изменение записи Answer в БД по ее номеру(id)"
@@ -66,7 +69,7 @@ public class AnswerController {
     @Operation(
             summary = "Удаление записи Answer из БД по ее номеру(id)"
     )
-    @DeleteMapping("/id}")
+    @DeleteMapping("/{id}")
     void deleteAnswer(@PathVariable Long id) {
         answerService.deleteAnswerById(id);
     }

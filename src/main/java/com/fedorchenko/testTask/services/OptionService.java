@@ -4,7 +4,6 @@ import com.fedorchenko.testTask.entities.Option;
 import com.fedorchenko.testTask.enums.EntityList;
 import com.fedorchenko.testTask.exceptions.EntityNotFoundException;
 import com.fedorchenko.testTask.repositories.OptionRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +11,12 @@ import java.util.List;
 @Service
 public class OptionService {
 
-    @Autowired
+    final
     OptionRepo optionRepo;
+
+    public OptionService(OptionRepo optionRepo) {
+        this.optionRepo = optionRepo;
+    }
 
     public List<Option> getOptions() {
         return optionRepo.findAll();
