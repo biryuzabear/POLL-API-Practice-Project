@@ -6,6 +6,7 @@ import com.fedorchenko.testTask.entities.Question;
 import com.fedorchenko.testTask.entities.User;
 import com.fedorchenko.testTask.repositories.AnswerRepo;
 import com.fedorchenko.testTask.repositories.PollRepo;
+import com.fedorchenko.testTask.repositories.QuestionRepo;
 import com.fedorchenko.testTask.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,12 @@ public class UserApiService {
     UserRepo userRepo;
     @Autowired
     AnswerRepo answerRepo;
+    @Autowired
+    QuestionRepo questionRepo;
+
+    public User getUser(String name){
+        return userRepo.findByName(name);
+    }
 
     public List<Poll> getAnswered(String name){
       return pollRepo.findAnsweredPollsByUserId(userRepo.findByName(name).getId());
@@ -52,6 +59,14 @@ public class UserApiService {
             answers.add(answerRepo.findByQuestionAndUser(question,user));
         }
        return answers;
+    }
+
+    public Question getQuestionById(Long id){
+        return questionRepo.getById(id);
+    }
+
+    public Answer saveAnswer(Answer answer){
+        return answerRepo.save(answer);
     }
 
 

@@ -65,10 +65,11 @@ public class PollWithQuestionsDTO implements Serializable {
     public static class QuestionDto implements Serializable {
         private final String text;
         private final List<String> optionTexts;
+        private final String url;
 
         public QuestionDto(Question question, Answer answer){
         this(question);
-        optionTexts.add("Был выбран ответ: " + answer.getText());
+        optionTexts.add("Chosen answer: " + answer.getText());
         }
 
         public QuestionDto(Question question) {
@@ -78,6 +79,7 @@ public class PollWithQuestionsDTO implements Serializable {
                 optionsTexts.add(option.getText());
             }
             this.optionTexts = optionsTexts;
+            url = "/api/user_api/question/" + question.getId();
         }
 
 
@@ -87,6 +89,10 @@ public class PollWithQuestionsDTO implements Serializable {
 
         public List<String> getOptionTexts() {
             return optionTexts;
+        }
+
+        public String getUrl() {
+            return url;
         }
     }
 
